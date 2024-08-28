@@ -1,0 +1,9 @@
+com\aecode\webcoursesback\services\IUserProfileService.class
+com\aecode\webcoursesback\controllers\UserProfileController.class
+com\aecode\webcoursesback\servicesimplement\UserProfileServiceImplement.class
+com\aecode\webcoursesback\WebCoursesBackApplication.class
+com\aecode\webcoursesback\config\CorsConfig.class
+com\aecode\webcoursesback\entities\UserProfile.class
+com\aecode\webcoursesback\repositories\IUserProfileRepository.class
+com\aecode\webcoursesback\ServletInitializer.class
+com\aecode\webcoursesback\dtos\UserProfileDTO.class
