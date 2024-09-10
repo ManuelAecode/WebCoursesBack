@@ -2,11 +2,9 @@ package com.aecode.webcoursesback.dtos;
 
 public class UserProfileDTO {
     private int userId;
-    private String username;
+    private String fullname;
     private String email;
     private String passwordHash;
-    private String firstName;
-    private String lastName;
 
     public int getUserId() {
         return userId;
@@ -16,12 +14,12 @@ public class UserProfileDTO {
         this.userId = userId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getEmail() {
@@ -38,22 +36,6 @@ public class UserProfileDTO {
 
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
 }

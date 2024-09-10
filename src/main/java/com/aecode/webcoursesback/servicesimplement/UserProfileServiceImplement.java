@@ -19,11 +19,9 @@ public class UserProfileServiceImplement implements IUserProfileService {
             throw new RuntimeException("El correo electrónico ya está en uso");
         }
         UserProfile userProfile = new UserProfile();
-        userProfile.setUsername(userdto.getUsername());
+        userProfile.setFullname(userdto.getFullname());
         userProfile.setEmail(userdto.getEmail());
         userProfile.setPasswordHash(userdto.getPasswordHash());
-        userProfile.setFirstName(userdto.getFirstName());
-        userProfile.setLastName(userdto.getLastName());
         upR.save(userProfile);
     }
 
@@ -48,8 +46,8 @@ public class UserProfileServiceImplement implements IUserProfileService {
     }
 
     @Override
-    public UserProfile authenticateUser(String usernameOrEmail, String password) {
-        UserProfile user = upR.findByEmailOrUsername(usernameOrEmail, usernameOrEmail);
+    public UserProfile authenticateUser(String Email, String password) {
+        UserProfile user = upR.findByEmail(Email);
         if (user != null && user.getPasswordHash().equals(password)) {
             return user; // Devolver el perfil solo si las credenciales son válidas
         }

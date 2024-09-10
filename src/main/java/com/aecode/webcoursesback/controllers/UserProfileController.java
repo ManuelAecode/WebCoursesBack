@@ -32,12 +32,12 @@ public class UserProfileController {
 
     // Autenticación de usuario existente
     @PostMapping("/login")
-    public UserProfile loginUser(@RequestParam String usernameOrEmail, @RequestParam String password) {
-        UserProfile user = upS.authenticateUser(usernameOrEmail, password);
+    public UserProfile loginUser(@RequestParam String Email, @RequestParam String password) {
+        UserProfile user = upS.authenticateUser(Email, password);
         if (user != null) {
             return user; // Devuelve el perfil del usuario autenticado
         } else {
-            throw new RuntimeException("Invalid username/email or password");
+            throw new RuntimeException("Invalid email or password");
         }
     }
 

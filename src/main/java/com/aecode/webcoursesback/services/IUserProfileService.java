@@ -12,6 +12,6 @@ public interface IUserProfileService {
     public UserProfile listId(int userId);
 
     public void update(UserProfile userprofile);
-    public UserProfile authenticateUser(String usernameOrEmail, String password);
+    public UserProfile authenticateUser(String Email, String password);
 
 }

@@ -11,20 +11,14 @@ public class UserProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
 
-    @Column(nullable = false, unique = true, length = 50)
-    private String username;
+    @Column(length = 50)
+    private String fullname;
 
     @Column(nullable = false, unique = true, length = 100)
     private String email;
 
     @Column(nullable = false)
     private String passwordHash;
-
-    @Column(length = 50)
-    private String firstName;
-
-    @Column(length = 50)
-    private String lastName;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -46,13 +40,12 @@ public class UserProfile {
     public UserProfile() {
     }
 
-    public UserProfile(int userId, String username, String email, String passwordHash, String firstName, String lastName, LocalDateTime createdAt, LocalDateTime updatedAt) {
+
+    public UserProfile(int userId, String fullname, String email, String passwordHash, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.userId = userId;
-        this.username = username;
+        this.fullname = fullname;
         this.email = email;
         this.passwordHash = passwordHash;
-        this.firstName = firstName;
-        this.lastName = lastName;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -65,12 +58,12 @@ public class UserProfile {
         this.userId = userId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getEmail() {
@@ -89,21 +82,6 @@ public class UserProfile {
         this.passwordHash = passwordHash;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
