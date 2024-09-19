@@ -1,5 +1,6 @@
 package com.aecode.webcoursesback.controllers;
 import com.aecode.webcoursesback.dtos.CourseDTO;
+import com.aecode.webcoursesback.dtos.ModuleDTO;
 import com.aecode.webcoursesback.entities.Course;
 import com.aecode.webcoursesback.services.ICourseService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,12 +12,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import com.aecode.webcoursesback.entities.Module;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -77,8 +79,16 @@ public class CourseController  {
                     dto.setDescription(course.getDescription());
                     dto.setInstructor(course.getInstructor());
                     dto.setTitle(course.getTitle());
-
+                    dto.setModules(course.getModules().stream().map(module -> {
+                        ModuleDTO dtoModule = new ModuleDTO();
+                        dtoModule.setModuleId(module.getModuleId());
+                        dtoModule.setTitle(module.getTitle());
+                        dtoModule.setDescription(module.getDescription());
+                        dtoModule.setOrderNumber(module.getOrderNumber());
+                        return dtoModule;
+                    }).collect(Collectors.toSet()));
                     dto.setImage("/uploads/" + course.getImage());
+
                     return dto;
                 })
                 .collect(Collectors.toList());
