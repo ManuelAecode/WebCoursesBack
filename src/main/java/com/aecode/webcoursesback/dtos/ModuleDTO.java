@@ -12,6 +12,9 @@ public class ModuleDTO {
     private Set<ClassDTO> classes;
     private TestDTO test;
 
+    public ModuleDTO(int moduleId, String title, String description, int orderNumber) {
+    }
+
     public int getModuleId() {
         return moduleId;
     }

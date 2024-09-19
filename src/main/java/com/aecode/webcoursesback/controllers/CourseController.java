@@ -79,14 +79,9 @@ public class CourseController  {
                     dto.setDescription(course.getDescription());
                     dto.setInstructor(course.getInstructor());
                     dto.setTitle(course.getTitle());
-                    dto.setModules(course.getModules().stream().map(module -> {
-                        ModuleDTO dtoModule = new ModuleDTO();
-                        dtoModule.setModuleId(module.getModuleId());
-                        dtoModule.setTitle(module.getTitle());
-                        dtoModule.setDescription(module.getDescription());
-                        dtoModule.setOrderNumber(module.getOrderNumber());
-                        return dtoModule;
-                    }).collect(Collectors.toSet()));
+                    dto.setModules(course.getModules().stream().map(module -> new ModuleDTO(module.getModuleId(), module.getTitle(),
+                            module.getDescription(), module.getOrderNumber())).collect(Collectors.toSet()));
+
                     dto.setImage("/uploads/" + course.getImage());
 
                     return dto;
