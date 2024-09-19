@@ -19,7 +19,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -79,11 +81,19 @@ public class CourseController  {
                     dto.setDescription(course.getDescription());
                     dto.setInstructor(course.getInstructor());
                     dto.setTitle(course.getTitle());
-                    dto.setModules(course.getModules().stream().map(module -> new ModuleDTO(module.getModuleId(), module.getTitle(),
-                            module.getDescription(), module.getOrderNumber())).collect(Collectors.toSet()));
-
                     dto.setImage("/uploads/" + course.getImage());
 
+                    dto.setModules(course.getModules().stream()
+                            .map(module -> {
+                                ModuleDTO moduleDTO = new ModuleDTO();
+                                moduleDTO.setModuleId(module.getModuleId());
+                                moduleDTO.setTitle(module.getTitle());
+                                moduleDTO.setDescription(module.getDescription());
+                                moduleDTO.setOrderNumber(module.getOrderNumber());
+                                // Agrega aquí las demás propiedades que necesites convertir
+                                return moduleDTO;
+                            })
+                            .collect(Collectors.toSet()));
                     return dto;
                 })
                 .collect(Collectors.toList());
