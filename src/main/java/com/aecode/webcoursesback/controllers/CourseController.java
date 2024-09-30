@@ -12,16 +12,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import com.aecode.webcoursesback.entities.Module;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -87,8 +83,8 @@ public class CourseController  {
                             .map(module -> {
                                 ModuleDTO moduleDTO = new ModuleDTO();
                                 moduleDTO.setModuleId(module.getModuleId());
+                                moduleDTO.setCourseId(module.getCourse().getCourseId());
                                 moduleDTO.setTitle(module.getTitle());
-                                moduleDTO.setDescription(module.getDescription());
                                 moduleDTO.setOrderNumber(module.getOrderNumber());
                                 // Agrega aquí las demás propiedades que necesites convertir
                                 return moduleDTO;

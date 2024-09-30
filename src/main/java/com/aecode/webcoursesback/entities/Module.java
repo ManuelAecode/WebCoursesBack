@@ -21,9 +21,6 @@ public class Module {
     @Column(nullable = false, length = 255)
     private String title;
 
-    @Column(columnDefinition = "TEXT")
-    private String description;
-
     @Column(nullable = false)
     private int orderNumber;
 
@@ -51,11 +48,10 @@ public class Module {
     public Module() {
     }
 
-    public Module(int moduleId, Course course, String title, String description, int orderNumber, LocalDateTime createdAt, LocalDateTime updatedAt, Set<Class> classes) {
+    public Module(int moduleId, Course course, String title, int orderNumber, LocalDateTime createdAt, LocalDateTime updatedAt, Set<Class> classes) {
         this.moduleId = moduleId;
         this.course = course;
         this.title = title;
-        this.description = description;
         this.orderNumber = orderNumber;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -86,13 +82,6 @@ public class Module {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public int getOrderNumber() {
         return orderNumber;

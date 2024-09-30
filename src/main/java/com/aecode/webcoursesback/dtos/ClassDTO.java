@@ -1,13 +1,15 @@
 package com.aecode.webcoursesback.dtos;
 
-import java.time.LocalDateTime;
+import jakarta.persistence.Column;
 
 public class ClassDTO {
 
     private int classId;
-    private int moduleId; // ID del módulo al que pertenece la clase
+    private int moduleId;
     private String title;
-    private String videoUrl; // URL del video de la clase
+    private String videoUrl;
+    private String description;
+    private String document;
     private int durationMinutes;
     private int orderNumber;
 
@@ -41,6 +43,22 @@ public class ClassDTO {
 
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDocument() {
+        return document;
+    }
+
+    public void setDocument(String document) {
+        this.document = document;
     }
 
     public int getDurationMinutes() {

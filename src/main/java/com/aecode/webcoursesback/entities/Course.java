@@ -25,10 +25,10 @@ public class Course {
     @Column(length = 255)
     private String image;
 
-    @Column(nullable = false)
+    @Column()
     private LocalDateTime createdAt;
 
-    @Column(nullable = false)
+    @Column()
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)

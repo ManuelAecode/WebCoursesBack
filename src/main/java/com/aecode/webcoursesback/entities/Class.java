@@ -22,16 +22,22 @@ public class Class {
     @Column(nullable = false, length = 255)
     private String videoUrl;
 
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
+    @Column( length = 255)
+    private String document;
+
     @Column(nullable = false)
     private int durationMinutes;
 
     @Column(nullable = false)
     private int orderNumber;
 
-    @Column(nullable = false)
+    @Column()
     private LocalDateTime createdAt;
 
-    @Column(nullable = false)
+    @Column()
     private LocalDateTime updatedAt;
 
     @PrePersist
@@ -48,11 +54,13 @@ public class Class {
     public Class() {
     }
 
-    public Class(int classId, Module module, String title, String videoUrl, int durationMinutes, int orderNumber, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Class(int classId, Module module, String title, String videoUrl, String description, String document, int durationMinutes, int orderNumber, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.classId = classId;
         this.module = module;
         this.title = title;
         this.videoUrl = videoUrl;
+        this.description = description;
+        this.document = document;
         this.durationMinutes = durationMinutes;
         this.orderNumber = orderNumber;
         this.createdAt = createdAt;
@@ -89,6 +97,22 @@ public class Class {
 
     public void setVideoUrl(String videoUrl) {
         this.videoUrl = videoUrl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDocument() {
+        return document;
+    }
+
+    public void setDocument(String document) {
+        this.document = document;
     }
 
     public int getDurationMinutes() {
