@@ -1,5 +1,6 @@
 package com.aecode.webcoursesback.servicesimplement;
 
+import com.aecode.webcoursesback.dtos.LoginDTO;
 import com.aecode.webcoursesback.dtos.UserProfileDTO;
 import com.aecode.webcoursesback.entities.UserProfile;
 import com.aecode.webcoursesback.repositories.IUserProfileRepository;
@@ -46,10 +47,10 @@ public class UserProfileServiceImplement implements IUserProfileService {
     }
 
     @Override
-    public UserProfile authenticateUser(String Email, String password) {
-        UserProfile user = upR.findByEmail(Email);
-        if (user != null && user.getPasswordHash().equals(password)) {
-            return user; // Devolver el perfil solo si las credenciales son válidas
+    public UserProfile authenticateUser(LoginDTO logindto) {
+        UserProfile profile = upR.findByEmail(logindto.getEmail());
+        if (profile != null && profile.getPasswordHash().equals(logindto.getPasswordHash())) {
+            return profile; // Devolver el perfil solo si las credenciales son válidas
         }
         return null;
     }

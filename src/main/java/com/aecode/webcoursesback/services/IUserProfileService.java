@@ -1,5 +1,6 @@
 package com.aecode.webcoursesback.services;
 
+import com.aecode.webcoursesback.dtos.LoginDTO;
 import com.aecode.webcoursesback.dtos.UserProfileDTO;
 import com.aecode.webcoursesback.entities.UserProfile;
 
@@ -12,6 +13,6 @@ public interface IUserProfileService {
     public UserProfile listId(int userId);
 
     public void update(UserProfile userprofile);
-    public UserProfile authenticateUser(String Email, String password);
+    public UserProfile authenticateUser(LoginDTO logindto);
 
 }

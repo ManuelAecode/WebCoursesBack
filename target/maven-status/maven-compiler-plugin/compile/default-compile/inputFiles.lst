@@ -9,12 +9,15 @@ C:\Users\MANUEL\OneDrive\Escritorio\manuel\WebCourses\WebCoursesBack\src\main\ja
 C:\Users\MANUEL\OneDrive\Escritorio\manuel\WebCourses\WebCoursesBack\src\main\java\com\aecode\webcoursesback\dtos\AnswerDTO.java
 C:\Users\MANUEL\OneDrive\Escritorio\manuel\WebCourses\WebCoursesBack\src\main\java\com\aecode\webcoursesback\dtos\ClassDTO.java
 C:\Users\MANUEL\OneDrive\Escritorio\manuel\WebCourses\WebCoursesBack\src\main\java\com\aecode\webcoursesback\dtos\CourseDTO.java
+C:\Users\MANUEL\OneDrive\Escritorio\manuel\WebCourses\WebCoursesBack\src\main\java\com\aecode\webcoursesback\dtos\LoginDTO.java
 C:\Users\MANUEL\OneDrive\Escritorio\manuel\WebCourses\WebCoursesBack\src\main\java\com\aecode\webcoursesback\dtos\ModuleDTO.java
 C:\Users\MANUEL\OneDrive\Escritorio\manuel\WebCourses\WebCoursesBack\src\main\java\com\aecode\webcoursesback\dtos\QuestionDTO.java
 C:\Users\MANUEL\OneDrive\Escritorio\manuel\WebCourses\WebCoursesBack\src\main\java\com\aecode\webcoursesback\dtos\TestDTO.java
 C:\Users\MANUEL\OneDrive\Escritorio\manuel\WebCourses\WebCoursesBack\src\main\java\com\aecode\webcoursesback\dtos\UserProfileDTO.java
 C:\Users\MANUEL\OneDrive\Escritorio\manuel\WebCourses\WebCoursesBack\src\main\java\com\aecode\webcoursesback\entities\Answer.java
 C:\Users\MANUEL\OneDrive\Escritorio\manuel\WebCourses\WebCoursesBack\src\main\java\com\aecode\webcoursesback\entities\Class.java
+C:\Users\MANUEL\OneDrive\Escritorio\manuel\WebCourses\WebCoursesBack\src\main\java\com\aecode\webcoursesback\entities\ClassAnswer.java
+C:\Users\MANUEL\OneDrive\Escritorio\manuel\WebCourses\WebCoursesBack\src\main\java\com\aecode\webcoursesback\entities\ClassQuestion.java
 C:\Users\MANUEL\OneDrive\Escritorio\manuel\WebCourses\WebCoursesBack\src\main\java\com\aecode\webcoursesback\entities\Course.java
 C:\Users\MANUEL\OneDrive\Escritorio\manuel\WebCourses\WebCoursesBack\src\main\java\com\aecode\webcoursesback\entities\Module.java
 C:\Users\MANUEL\OneDrive\Escritorio\manuel\WebCourses\WebCoursesBack\src\main\java\com\aecode\webcoursesback\entities\Question.java

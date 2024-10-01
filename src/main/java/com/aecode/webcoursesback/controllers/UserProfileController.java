@@ -1,5 +1,6 @@
 package com.aecode.webcoursesback.controllers;
 
+import com.aecode.webcoursesback.dtos.LoginDTO;
 import com.aecode.webcoursesback.dtos.UserProfileDTO;
 import com.aecode.webcoursesback.entities.UserProfile;
 import com.aecode.webcoursesback.services.IUserProfileService;
@@ -32,12 +33,13 @@ public class UserProfileController {
 
     // Autenticación de usuario existente
     @PostMapping("/login")
-    public UserProfile loginUser(@RequestParam String Email, @RequestParam String password) {
-        UserProfile user = upS.authenticateUser(Email, password);
-        if (user != null) {
-            return user; // Devuelve el perfil del usuario autenticado
+    public ResponseEntity<UserProfile> login(@RequestBody LoginDTO dto) {
+        UserProfile profile = upS.authenticateUser( dto);
+        if (profile != null && profile.getPasswordHash().equals(dto.getPasswordHash())) {
+            dto.setUserId(profile.getUserId());
+            return ResponseEntity.ok(profile); // Devuelve el objeto LoginDTO con el ID de perfil actualizado
         } else {
-            throw new RuntimeException("Invalid email or password");
+            return ResponseEntity.badRequest().body(null); // En caso de credenciales inválidas, puedes devolver null o un objeto vacío
         }
     }
 
