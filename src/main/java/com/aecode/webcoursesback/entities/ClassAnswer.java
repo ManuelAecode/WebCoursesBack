@@ -11,7 +11,7 @@ public class ClassAnswer {
 
     @ManyToOne
     @JoinColumn(name = "question_id", nullable = false)
-    private ClassQuestion classquestion;
+    private ClassQuestion classQuestion;
 
     @Column(nullable = false, length = 255)
     private String answerText;
@@ -22,9 +22,9 @@ public class ClassAnswer {
     public ClassAnswer() {
     }
 
-    public ClassAnswer(int answerId, ClassQuestion classquestion, String answerText, boolean isCorrect) {
+    public ClassAnswer(int answerId, ClassQuestion classQuestion, String answerText, boolean isCorrect) {
         this.answerId = answerId;
-        this.classquestion = classquestion;
+        this.classQuestion = classQuestion;
         this.answerText = answerText;
         this.isCorrect = isCorrect;
     }
@@ -38,11 +38,11 @@ public class ClassAnswer {
     }
 
     public ClassQuestion getClassquestion() {
-        return classquestion;
+        return classQuestion;
     }
 
     public void setClassquestion(ClassQuestion classquestion) {
-        this.classquestion = classquestion;
+        this.classQuestion = classquestion;
     }
 
     public String getAnswerText() {

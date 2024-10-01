@@ -7,7 +7,6 @@ public class ModuleDTO {
     private int moduleId;
     private int courseId;
     private String title;
-    private String description;
     private int orderNumber;
     private Set<ClassDTO> classes;
     private TestDTO test;
@@ -34,14 +33,6 @@ public class ModuleDTO {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public int getOrderNumber() {

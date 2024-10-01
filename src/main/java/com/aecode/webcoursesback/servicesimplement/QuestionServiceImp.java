@@ -15,7 +15,7 @@ public class QuestionServiceImp implements IQuestionService {
 
     @Override
     public void insert(Question question) {
-        qR.findAll();
+        qR.save(question);
     }
 
     @Override

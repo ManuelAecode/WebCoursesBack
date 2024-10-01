@@ -1,6 +1,8 @@
 package com.aecode.webcoursesback.controllers;
 
 import com.aecode.webcoursesback.dtos.ClassDTO;
+import com.aecode.webcoursesback.dtos.ClassQuestionDTO;
+import com.aecode.webcoursesback.dtos.ModuleDTO;
 import com.aecode.webcoursesback.entities.Class;
 import com.aecode.webcoursesback.services.IClassService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -83,6 +85,14 @@ public class ClassController {
                     dto.setOrderNumber(classes.getOrderNumber());
                     dto.setDocument("/uploads/" + classes.getDocument());
 
+
+                    dto.setClassquestions(classes.getClassquestions().stream()
+                            .map(classQuestion -> {
+                                ClassQuestionDTO questionDTO = new ClassQuestionDTO();
+                                questionDTO.setQuestionId(classQuestion.getQuestionId());
+                                return questionDTO;
+                            })
+                            .collect(Collectors.toSet()));
                     return dto;
                 })
                 .collect(Collectors.toList());

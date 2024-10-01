@@ -6,28 +6,31 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "classquestion")
+@Table(name = "classquestions")
 public class ClassQuestion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int questionId;
 
     @ManyToOne
-    @JoinColumn(name = "classId", nullable = false)
-    private Class classes;
+    @JoinColumn(name = "class_id", nullable = false)
+    private Class aclass;
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String questionText;
 
+    @OneToMany(mappedBy = "classQuestion", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ClassAnswer> classAnswers = new HashSet<>();
 
 
     public ClassQuestion() {
     }
 
-    public ClassQuestion(int questionId, Class classes, String questionText) {
+    public ClassQuestion(int questionId, Class aclass, String questionText, Set<ClassAnswer> classAnswers) {
         this.questionId = questionId;
-        this.classes = classes;
+        this.aclass = aclass;
         this.questionText = questionText;
+        this.classAnswers = classAnswers;
     }
 
     public int getQuestionId() {
@@ -38,12 +41,12 @@ public class ClassQuestion {
         this.questionId = questionId;
     }
 
-    public Class getClasses() {
-        return classes;
+    public Class getAclass() {
+        return aclass;
     }
 
-    public void setClasses(Class classes) {
-        this.classes = classes;
+    public void setAclass(Class aclass) {
+        this.aclass = aclass;
     }
 
     public String getQuestionText() {
@@ -54,5 +57,11 @@ public class ClassQuestion {
         this.questionText = questionText;
     }
 
+    public Set<ClassAnswer> getClassanswers() {
+        return classAnswers;
+    }
 
+    public void setClassanswers(Set<ClassAnswer> classanswers) {
+        this.classAnswers = classanswers;
+    }
 }

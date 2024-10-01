@@ -3,9 +3,11 @@ package com.aecode.webcoursesback.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "class")
+@Table(name = "classes")
 public class Class {
 
     @Id
@@ -40,6 +42,9 @@ public class Class {
     @Column()
     private LocalDateTime updatedAt;
 
+    @OneToMany(mappedBy = "aclass", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ClassQuestion> classquestions = new HashSet<>();
+
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
@@ -54,7 +59,7 @@ public class Class {
     public Class() {
     }
 
-    public Class(int classId, Module module, String title, String videoUrl, String description, String document, int durationMinutes, int orderNumber, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Class(int classId, Module module, String title, String videoUrl, String description, String document, int durationMinutes, int orderNumber, LocalDateTime createdAt, LocalDateTime updatedAt, Set<ClassQuestion> classquestions) {
         this.classId = classId;
         this.module = module;
         this.title = title;
@@ -65,6 +70,7 @@ public class Class {
         this.orderNumber = orderNumber;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.classquestions = classquestions;
     }
 
     public int getClassId() {
@@ -145,5 +151,13 @@ public class Class {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Set<ClassQuestion> getClassquestions() {
+        return classquestions;
+    }
+
+    public void setClassquestions(Set<ClassQuestion> classquestions) {
+        this.classquestions = classquestions;
     }
 }

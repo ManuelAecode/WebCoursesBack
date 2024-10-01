@@ -1,6 +1,5 @@
 package com.aecode.webcoursesback.dtos;
-
-import jakarta.persistence.Column;
+import java.util.Set;
 
 public class ClassDTO {
 
@@ -12,6 +11,8 @@ public class ClassDTO {
     private String document;
     private int durationMinutes;
     private int orderNumber;
+    private Set<ClassQuestionDTO> classquestions;
+
 
     public int getClassId() {
         return classId;
@@ -75,5 +76,13 @@ public class ClassDTO {
 
     public void setOrderNumber(int orderNumber) {
         this.orderNumber = orderNumber;
+    }
+
+    public Set<ClassQuestionDTO> getClassquestions() {
+        return classquestions;
+    }
+
+    public void setClassquestions(Set<ClassQuestionDTO> classquestions) {
+        this.classquestions = classquestions;
     }
 }
