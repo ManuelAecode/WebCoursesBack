@@ -5,8 +5,6 @@ import java.util.Set;
 public class CourseDTO {
     private int courseId;
     private String title;
-    private String description;
-    private String instructor;
     private String image;
     private Set<ModuleDTO> modules;
 
@@ -24,22 +22,6 @@ public class CourseDTO {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getInstructor() {
-        return instructor;
-    }
-
-    public void setInstructor(String instructor) {
-        this.instructor = instructor;
     }
 
     public String getImage() {

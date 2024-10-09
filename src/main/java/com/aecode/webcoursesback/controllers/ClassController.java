@@ -4,7 +4,9 @@ import com.aecode.webcoursesback.dtos.ClassDTO;
 import com.aecode.webcoursesback.dtos.ClassQuestionDTO;
 import com.aecode.webcoursesback.dtos.ModuleDTO;
 import com.aecode.webcoursesback.entities.Class;
+import com.aecode.webcoursesback.entities.UserProfile;
 import com.aecode.webcoursesback.services.IClassService;
+import com.aecode.webcoursesback.services.IUserProfileService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,9 @@ public class ClassController {
 
     @Autowired
     private IClassService cS;
+
+    @Autowired
+    private IUserProfileService upS;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> insert(@RequestPart(value="file", required = false) MultipartFile imagen,
@@ -72,7 +77,14 @@ public class ClassController {
 
 
     @GetMapping
-    public ResponseEntity<List<ClassDTO>> list(){
+    public ResponseEntity<?> list(@RequestParam String email) {
+        // Verificar si el usuario tiene acceso
+        UserProfile user = upS.findByEmail(email);
+        if (user == null || !user.isHasAccess()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access Denied: No access to classes.");
+        }
+
+        // Si tiene acceso, devolver las clases
         List<ClassDTO> datos = cS.list().stream()
                 .map(classes -> {
                     ClassDTO dto = new ClassDTO();
@@ -85,7 +97,6 @@ public class ClassController {
                     dto.setOrderNumber(classes.getOrderNumber());
                     dto.setDocument("/uploads/" + classes.getDocument());
 
-
                     dto.setClassquestions(classes.getClassquestions().stream()
                             .map(classQuestion -> {
                                 ClassQuestionDTO questionDTO = new ClassQuestionDTO();
@@ -96,8 +107,11 @@ public class ClassController {
                     return dto;
                 })
                 .collect(Collectors.toList());
+
         return ResponseEntity.ok(datos);
     }
+
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id")Integer id){cS.delete(id);}
 

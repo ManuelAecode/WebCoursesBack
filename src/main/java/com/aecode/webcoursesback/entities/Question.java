@@ -20,35 +20,16 @@ public class Question {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String questionText;
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-
-    @Column(nullable = false)
-    private LocalDateTime updatedAt;
-
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Answer> answers = new HashSet<>();
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
 
     public Question() {
     }
 
-    public Question(int questionId, Test test, String questionText, LocalDateTime createdAt, LocalDateTime updatedAt, Set<Answer> answers) {
+    public Question(int questionId, Test test, String questionText, Set<Answer> answers) {
         this.questionId = questionId;
         this.test = test;
         this.questionText = questionText;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
         this.answers = answers;
     }
 
@@ -74,22 +55,6 @@ public class Question {
 
     public void setQuestionText(String questionText) {
         this.questionText = questionText;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     public Set<Answer> getAnswers() {

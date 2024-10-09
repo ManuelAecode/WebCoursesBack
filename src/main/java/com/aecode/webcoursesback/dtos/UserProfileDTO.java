@@ -5,6 +5,7 @@ public class UserProfileDTO {
     private String fullname;
     private String email;
     private String passwordHash;
+    private boolean hasAccess;
 
     public int getUserId() {
         return userId;
@@ -38,4 +39,11 @@ public class UserProfileDTO {
         this.passwordHash = passwordHash;
     }
 
+    public boolean isHasAccess() {
+        return hasAccess;
+    }
+
+    public void setHasAccess(boolean hasAccess) {
+        this.hasAccess = hasAccess;
+    }
 }

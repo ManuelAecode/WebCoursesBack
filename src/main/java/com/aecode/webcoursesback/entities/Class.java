@@ -1,8 +1,6 @@
 package com.aecode.webcoursesback.entities;
 
 import jakarta.persistence.*;
-
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,30 +34,13 @@ public class Class {
     @Column(nullable = false)
     private int orderNumber;
 
-    @Column()
-    private LocalDateTime createdAt;
-
-    @Column()
-    private LocalDateTime updatedAt;
-
     @OneToMany(mappedBy = "aclass", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ClassQuestion> classquestions = new HashSet<>();
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
 
     public Class() {
     }
 
-    public Class(int classId, Module module, String title, String videoUrl, String description, String document, int durationMinutes, int orderNumber, LocalDateTime createdAt, LocalDateTime updatedAt, Set<ClassQuestion> classquestions) {
+    public Class(int classId, Module module, String title, String videoUrl, String description, String document, int durationMinutes, int orderNumber,Set<ClassQuestion> classquestions) {
         this.classId = classId;
         this.module = module;
         this.title = title;
@@ -68,8 +49,6 @@ public class Class {
         this.document = document;
         this.durationMinutes = durationMinutes;
         this.orderNumber = orderNumber;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
         this.classquestions = classquestions;
     }
 
@@ -135,22 +114,6 @@ public class Class {
 
     public void setOrderNumber(int orderNumber) {
         this.orderNumber = orderNumber;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     public Set<ClassQuestion> getClassquestions() {

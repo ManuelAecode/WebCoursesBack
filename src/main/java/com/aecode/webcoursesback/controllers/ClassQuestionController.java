@@ -2,10 +2,13 @@ package com.aecode.webcoursesback.controllers;
 import com.aecode.webcoursesback.dtos.ClassQuestionDTO;
 import com.aecode.webcoursesback.entities.Class;
 import com.aecode.webcoursesback.entities.ClassQuestion;
+import com.aecode.webcoursesback.entities.UserProfile;
 import com.aecode.webcoursesback.repositories.IClassRepo;
 import com.aecode.webcoursesback.services.IClassQuestionService;
+import com.aecode.webcoursesback.services.IUserProfileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +24,8 @@ public class ClassQuestionController {
     @Autowired
     private IClassRepo classRepository;
 
+    @Autowired
+    private IUserProfileService upS;
 
     @PostMapping
     public ResponseEntity<String> insert(@RequestBody ClassQuestionDTO dto) {
@@ -42,14 +47,24 @@ public class ClassQuestionController {
     }
 
     @GetMapping
-    public List<ClassQuestionDTO> list() {
+    public ResponseEntity<?> list(@RequestParam String email) {
+        // Verificar si el usuario tiene acceso
+        UserProfile user = upS.findByEmail(email);
+        if (user == null || !user.isHasAccess()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access Denied: No access to class questions.");
+        }
+
+        // Si tiene acceso, devolver las preguntas de la clase
         ModelMapper m = new ModelMapper();
         List<ClassQuestion> q = qS.list();
-        return q.stream()
+        List<ClassQuestionDTO> questionDTOs = q.stream()
                 .map(question -> m.map(question, ClassQuestionDTO.class))
                 .collect(Collectors.toList());
+
+        return ResponseEntity.ok(questionDTOs);
     }
-    @DeleteMapping("/{id}")
+
+        @DeleteMapping("/{id}")
     public void delete(@PathVariable("id")Integer id){qS.delete(id);}
 
     @GetMapping("/{id}")

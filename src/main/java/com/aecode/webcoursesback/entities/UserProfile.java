@@ -2,8 +2,6 @@ package com.aecode.webcoursesback.entities;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Table(name = "userprofile")
 public class UserProfile {
@@ -20,34 +18,18 @@ public class UserProfile {
     @Column(nullable = false)
     private String passwordHash;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-
     @Column(nullable = false)
-    private LocalDateTime updatedAt;
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
+    private boolean hasAccess = false;
 
     public UserProfile() {
     }
 
-
-    public UserProfile(int userId, String fullname, String email, String passwordHash, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public UserProfile(int userId, String fullname, String email, String passwordHash, boolean hasAccess) {
         this.userId = userId;
         this.fullname = fullname;
         this.email = email;
         this.passwordHash = passwordHash;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.hasAccess = hasAccess;
     }
 
     public int getUserId() {
@@ -82,20 +64,11 @@ public class UserProfile {
         this.passwordHash = passwordHash;
     }
 
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public boolean isHasAccess() {
+        return hasAccess;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setHasAccess(boolean hasAccess) {
+        this.hasAccess = hasAccess;
     }
 }

@@ -2,7 +2,9 @@ package com.aecode.webcoursesback.controllers;
 import com.aecode.webcoursesback.dtos.CourseDTO;
 import com.aecode.webcoursesback.dtos.ModuleDTO;
 import com.aecode.webcoursesback.entities.Course;
+import com.aecode.webcoursesback.entities.UserProfile;
 import com.aecode.webcoursesback.services.ICourseService;
+import com.aecode.webcoursesback.services.IUserProfileService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,9 @@ public class CourseController  {
 
     @Autowired
     private ICourseService cS;
+
+    @Autowired
+    private IUserProfileService upS;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> insert(@RequestPart(value="file", required = false) MultipartFile imagen,
@@ -69,16 +74,25 @@ public class CourseController  {
     }
 
     @GetMapping
-    public ResponseEntity<List<CourseDTO>> list(){
+    public ResponseEntity<?> list(@RequestParam String email) {
+        // Buscar al usuario por su email
+        UserProfile user = upS.findByEmail(email);
+
+        // Verificar si el usuario tiene acceso
+        if (user == null || !user.isHasAccess()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body("Access Denied: No access to courses.");
+        }
+
+        // Si tiene acceso, mapear y devolver la lista de cursos
         List<CourseDTO> datos = cS.list().stream()
                 .map(course -> {
                     CourseDTO dto = new CourseDTO();
                     dto.setCourseId(course.getCourseId());
-                    dto.setDescription(course.getDescription());
-                    dto.setInstructor(course.getInstructor());
                     dto.setTitle(course.getTitle());
                     dto.setImage("/uploads/" + course.getImage());
 
+                    // Mapear los módulos de cada curso
                     dto.setModules(course.getModules().stream()
                             .map(module -> {
                                 ModuleDTO moduleDTO = new ModuleDTO();
@@ -86,13 +100,15 @@ public class CourseController  {
                                 moduleDTO.setCourseId(module.getCourse().getCourseId());
                                 moduleDTO.setTitle(module.getTitle());
                                 moduleDTO.setOrderNumber(module.getOrderNumber());
-                                // Agrega aquí las demás propiedades que necesites convertir
                                 return moduleDTO;
                             })
                             .collect(Collectors.toSet()));
+
                     return dto;
                 })
                 .collect(Collectors.toList());
+
+        // Devolver los cursos mapeados
         return ResponseEntity.ok(datos);
     }
 

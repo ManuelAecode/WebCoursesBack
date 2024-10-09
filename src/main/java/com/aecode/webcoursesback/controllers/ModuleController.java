@@ -2,9 +2,12 @@ package com.aecode.webcoursesback.controllers;
 
 import com.aecode.webcoursesback.dtos.ModuleDTO;
 import com.aecode.webcoursesback.entities.Module;
+import com.aecode.webcoursesback.entities.UserProfile;
 import com.aecode.webcoursesback.services.IModuleService;
+import com.aecode.webcoursesback.services.IUserProfileService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +20,9 @@ public class ModuleController {
     @Autowired
     private IModuleService mS;
 
+    @Autowired
+    private IUserProfileService upS;
+
     @PostMapping
     public ResponseEntity<String> insert(@RequestBody ModuleDTO dto) {
         ModelMapper m = new ModelMapper();
@@ -26,13 +32,23 @@ public class ModuleController {
     }
 
     @GetMapping
-    public List<ModuleDTO> list() {
+    public ResponseEntity<?> list(@RequestParam String email) {
+        // Verificar si el usuario tiene acceso
+        UserProfile user = upS.findByEmail(email);
+        if (user == null || !user.isHasAccess()) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access Denied: No access to modules.");
+        }
+
+        // Si tiene acceso, devolver los módulos
         ModelMapper m = new ModelMapper();
         List<Module> modules = mS.list();
-        return modules.stream()
+        List<ModuleDTO> moduleDTOs = modules.stream()
                 .map(module -> m.map(module, ModuleDTO.class))
                 .collect(Collectors.toList());
+
+        return ResponseEntity.ok(moduleDTOs);
     }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id")Integer id){mS.delete(id);}
 

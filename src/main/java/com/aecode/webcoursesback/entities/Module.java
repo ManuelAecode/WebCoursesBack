@@ -24,37 +24,17 @@ public class Module {
     @Column(nullable = false)
     private int orderNumber;
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-
-    @Column(nullable = false)
-    private LocalDateTime updatedAt;
-
     @OneToMany(mappedBy = "module", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Class> classes = new HashSet<>();
-
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
 
     public Module() {
     }
 
-    public Module(int moduleId, Course course, String title, int orderNumber, LocalDateTime createdAt, LocalDateTime updatedAt, Set<Class> classes) {
+    public Module(int moduleId, Course course, String title, int orderNumber, Set<Class> classes) {
         this.moduleId = moduleId;
         this.course = course;
         this.title = title;
         this.orderNumber = orderNumber;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
         this.classes = classes;
     }
 
@@ -89,22 +69,6 @@ public class Module {
 
     public void setOrderNumber(int orderNumber) {
         this.orderNumber = orderNumber;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     public Set<Class> getClasses() {

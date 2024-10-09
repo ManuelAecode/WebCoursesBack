@@ -11,8 +11,7 @@ public interface IUserProfileService {
     List<UserProfile> list();
     public void delete(int userId);
     public UserProfile listId(int userId);
-
     public void update(UserProfile userprofile);
     public UserProfile authenticateUser(LoginDTO logindto);
-
+    public UserProfile findByEmail(String email);
 }

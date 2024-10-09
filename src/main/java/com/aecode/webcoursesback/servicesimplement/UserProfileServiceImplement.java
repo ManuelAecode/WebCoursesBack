@@ -54,4 +54,9 @@ public class UserProfileServiceImplement implements IUserProfileService {
         }
         return null;
     }
+
+    @Override
+    public UserProfile findByEmail(String email) {
+        return upR.findByEmail(email);
+    }
 }

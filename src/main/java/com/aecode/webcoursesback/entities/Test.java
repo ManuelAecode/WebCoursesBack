@@ -1,8 +1,6 @@
 package com.aecode.webcoursesback.entities;
 
 import jakarta.persistence.*;
-
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,38 +27,19 @@ public class Test {
     @Column(nullable = false)
     private int passingScore;
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt;
-
-    @Column(nullable = false)
-    private LocalDateTime updatedAt;
-
     @OneToMany(mappedBy = "test", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Question> questions = new HashSet<>();
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
 
     public Test() {
     }
 
-    public Test(int testId, Module module, String title, String description, int totalQuestions, int passingScore, LocalDateTime createdAt, LocalDateTime updatedAt, Set<Question> questions) {
+    public Test(int testId, Module module, String title, String description, int totalQuestions, int passingScore, Set<Question> questions) {
         this.testId = testId;
         this.module = module;
         this.title = title;
         this.description = description;
         this.totalQuestions = totalQuestions;
         this.passingScore = passingScore;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
         this.questions = questions;
     }
 
@@ -110,22 +89,6 @@ public class Test {
 
     public void setPassingScore(int passingScore) {
         this.passingScore = passingScore;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     public Set<Question> getQuestions() {
