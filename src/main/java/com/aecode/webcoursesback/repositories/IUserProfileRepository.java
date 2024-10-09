@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface IUserProfileRepository extends JpaRepository<UserProfile, Integer> {
 
@@ -14,4 +16,15 @@ public interface IUserProfileRepository extends JpaRepository<UserProfile, Integ
     //Buscar user por email or user
     @Query("SELECT u FROM UserProfile u WHERE u.email = ?1")
     UserProfile findByEmail(String email);
+
+    @Query("SELECT u FROM UserProfile u WHERE u.email LIKE %?1%")
+    List<UserProfile> findByEmailContaining(String partialEmail);
+
+    // Buscar usuarios con hasAccess = true
+    @Query("SELECT u FROM UserProfile u WHERE u.hasAccess = true")
+    List<UserProfile> findByHasAccessTrue();
+
+    // Buscar usuarios con hasAccess = false
+    @Query("SELECT u FROM UserProfile u WHERE u.hasAccess = false")
+    List<UserProfile> findByHasAccessFalse();
 }

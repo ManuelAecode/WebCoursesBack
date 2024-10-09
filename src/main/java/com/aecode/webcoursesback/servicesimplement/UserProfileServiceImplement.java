@@ -59,4 +59,19 @@ public class UserProfileServiceImplement implements IUserProfileService {
     public UserProfile findByEmail(String email) {
         return upR.findByEmail(email);
     }
+
+    @Override
+    public List<UserProfile> findByPartialEmail(String partialEmail) {
+        return upR.findByEmailContaining(partialEmail);
+    }
+
+    @Override
+    public List<UserProfile> findUsersWithAccess() {
+        return upR.findByHasAccessTrue();
+    }
+
+    @Override
+    public List<UserProfile> findUsersWithoutAccess() {
+        return upR.findByHasAccessFalse();
+    }
 }
