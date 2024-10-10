@@ -28,10 +28,8 @@ public class CourseController  {
 
     @Value("${file.upload-dir}")
     private String uploadDir;
-
     @Autowired
     private ICourseService cS;
-
     @Autowired
     private IUserProfileService upS;
 
@@ -40,7 +38,6 @@ public class CourseController  {
                                          @RequestPart(value = "data", required = false) String dtoJson) {
         String originalFilename = null;
         try {
-
             ObjectMapper objectMapper = new ObjectMapper();
             CourseDTO dto= objectMapper.readValue(dtoJson, CourseDTO.class);
 
@@ -58,10 +55,10 @@ public class CourseController  {
                 Files.write(path, bytes);
             }
 
-            // Convertir DTO a entidad
+            //Convertir DTO a entidad
             ModelMapper modelMapper = new ModelMapper();
             Course course = modelMapper.map(dto, Course.class);
-            // Establecer la ruta del archivo en la entidad
+            //Establecer la ruta del archivo en la entidad
             course.setImage("course/"+originalFilename);
             cS.insert(course);
 
@@ -77,41 +74,17 @@ public class CourseController  {
     public ResponseEntity<?> list(@RequestParam String email) {
         // Buscar al usuario por su email
         UserProfile user = upS.findByEmail(email);
-
         // Verificar si el usuario tiene acceso
         if (user == null || !user.isHasAccess()) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body("Access Denied: No access to courses.");
         }
-
-        // Si tiene acceso, mapear y devolver la lista de cursos
+        ModelMapper modelMapper = new ModelMapper();
         List<CourseDTO> datos = cS.list().stream()
-                .map(course -> {
-                    CourseDTO dto = new CourseDTO();
-                    dto.setCourseId(course.getCourseId());
-                    dto.setTitle(course.getTitle());
-                    dto.setImage("/uploads/" + course.getImage());
-
-                    // Mapear los módulos de cada curso
-                    dto.setModules(course.getModules().stream()
-                            .map(module -> {
-                                ModuleDTO moduleDTO = new ModuleDTO();
-                                moduleDTO.setModuleId(module.getModuleId());
-                                moduleDTO.setCourseId(module.getCourse().getCourseId());
-                                moduleDTO.setTitle(module.getTitle());
-                                moduleDTO.setOrderNumber(module.getOrderNumber());
-                                return moduleDTO;
-                            })
-                            .collect(Collectors.toSet()));
-
-                    return dto;
-                })
+                .map(course -> modelMapper.map(course, CourseDTO.class))  // Mapeo directo con ModelMapper
                 .collect(Collectors.toList());
-
-        // Devolver los cursos mapeados
         return ResponseEntity.ok(datos);
     }
-
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id")Integer id){cS.delete(id);}
 
@@ -127,5 +100,4 @@ public class CourseController  {
         Course c = m.map(dto, Course.class);
         cS.insert(c);
     }
-
 }
